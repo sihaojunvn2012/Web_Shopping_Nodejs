@@ -37,7 +37,7 @@ exports.Get_Index = (req,res,next) =>{
 exports.Get_Product=(req,res,next)=>{
 
 
-        Cart.AddProduct('0.458673316244021',6.9);
+        Cart.AddProduct('0.358673316244021',6.9);
 
         const ID =  req.params.ProductID;
 
