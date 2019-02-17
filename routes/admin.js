@@ -18,7 +18,11 @@ router.post('/add-product',AdminController.PostAddProduct);
 
 router.get('/products' , AdminController.GetAdminProducts);
 
+router.get('/edit-product/:ID',AdminController.GetEditProduct);
 
+router.post('/edit-product',AdminController.PostEditProduct);
+
+router.post('/delete-product',AdminController.PostDeleteProduct);
 
 module.exports = router;
 

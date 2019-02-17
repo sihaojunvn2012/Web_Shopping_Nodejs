@@ -2,7 +2,7 @@
 
 const path = require('path');
 const fs = require('fs');
-
+const Cart = require('./cart');
 // find Data on local file 
 const p = path.join(path.dirname(process.mainModule.filename), 'Data', 'products.json');
 
@@ -26,7 +26,8 @@ const GetProductFromFile = callback => {
 
 module.exports = class Product {
     // constructor properties    
-    constructor(title,imageURL,Price,Description) {
+    constructor(id,title,imageURL,Price,Description) {
+        this.ID = id;
         this.Title = title;
         this.ImageURL= imageURL;
         this.Price = Price;
@@ -34,8 +35,7 @@ module.exports = class Product {
     }
 
     // method object oriented programming
-    save() {
-        this.ID =  'M'+Math.floor((Math.random() * 1000000) + 1);
+    save() {       
         // console.log(p);
         // fs.readFile(p,(err,fileContent)=>{
         //     let products = [];
@@ -48,23 +48,63 @@ module.exports = class Product {
         //     }
 
         GetProductFromFile(products => {
+            if ( this.ID)
+        {
+            console.log(this.ID);
+            console.log(products);
+            const existingProductIndex = products.findIndex( p => p.ID === this.ID );
+           
 
+            const UpdateProduct = [...products]
+
+            UpdateProduct[existingProductIndex] = this ;            
+            fs.writeFile(p, JSON.stringify(UpdateProduct), (err) => {
+                if (err) {
+    
+                    console.log(err);
+    
+                }
+            });
+        }
+
+        else{
+            this.ID =  'M'+Math.floor((Math.random() * 1000000) + 1);
             products.push(this);
             console.log(products);
             // when i update Array Of Data  at that time , we must  update Data.JSON again by writeFlie. it make Update Data JSON 
             fs.writeFile(p, JSON.stringify(products), (err) => {
                 if (err) {
-
+    
                     console.log(err);
-
+    
                 }
             });
+        } 
             
         });
     }
 // })
 
 
+    static DeletePrductID (id) {
+        GetProductFromFile( Elements =>{
+
+            const Product = Elements.find( p => p.ID === id);
+
+            const UpdateProducts = Elements.filter(p => p.ID !==id);
+
+            
+
+            fs.writeFile(p, JSON.stringify(UpdateProducts), err => {
+                if(!err){
+
+                    Cart.DeleteProduct(id,Product.Price);
+
+                }
+            }); 
+
+        });
+    }
         // Get Data From products.json than we will pass into view  
     static fetchAll(callback) {
         GetProductFromFile(callback);

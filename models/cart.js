@@ -20,7 +20,7 @@ const p = path.join(path.dirname(process.mainModule.filename),
         let cart = { Products: [], TotalPrice: 0 };
         if (err) {
 
-            console.log(err)
+            console.log(err);
           
         }
         
@@ -51,5 +51,34 @@ const p = path.join(path.dirname(process.mainModule.filename),
           }) 
         }
     });
+    }
+
+    static DeleteProduct(ID , Price){
+
+       fs.readFile(p, (err, fileContent) => {
+       if (err) {
+
+          return ;
+
+       }      
+         const Cart = {...JSON.parse(fileContent)};
+
+         const product = Cart.Products.find( p => p.id ===ID);
+
+         const ProdcutQty = product.qty;
+
+          const UpdateProducts = Cart.Products.filter( p => p.id !==ID);
+
+          Cart.TotalPrice -= Price * ProdcutQty;
+          Cart.Products = [...UpdateProducts];         
+          
+
+          fs.writeFile(p, JSON.stringify(Cart), err => {
+          console.log(err);
+          });
+       
+       });
+
+
     }
   }  

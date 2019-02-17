@@ -34,10 +34,7 @@ exports.Get_Index = (req,res,next) =>{
 
 
     // Dynamic Routes 
-exports.Get_Product=(req,res,next)=>{
-
-
-        Cart.AddProduct('0.358673316244021',6.9);
+exports.Get_Product=(req,res,next)=>{       
 
         const ID =  req.params.ProductID;
 
@@ -48,8 +45,7 @@ exports.Get_Product=(req,res,next)=>{
                 Path:`/Products/${Element.ID}`,
                 TitlePage:'Product Detail'
             })
-        });
-       
+        });       
 }
 
 exports.Get_Cart = (req,res,next) =>{
@@ -59,6 +55,21 @@ exports.Get_Cart = (req,res,next) =>{
         Path: '/Cart'
     });
 }
+
+exports.Post_Cart = (req, res, next) => {
+
+    const ID = req.body.productId;
+      
+
+    Product.FindById(ID,Product =>{
+
+        Cart.AddProduct(ID,parseFloat(Product.Price));
+
+    });
+   res.redirect('/Cart');
+}
+
+
 
 exports.getCheckout = (req, res, next) => {
     res.render('Shop/checkout', {
