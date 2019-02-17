@@ -64,6 +64,9 @@ const p = path.join(path.dirname(process.mainModule.filename),
          const Cart = {...JSON.parse(fileContent)};
 
          const product = Cart.Products.find( p => p.id ===ID);
+         if(!product){
+           return ;
+         }
 
          const ProdcutQty = product.qty;
 
@@ -81,7 +84,6 @@ const p = path.join(path.dirname(process.mainModule.filename),
 
 
     }
-
     static GetCart (cb) {
 
       fs.readFile(p, (err, fileContent) => {

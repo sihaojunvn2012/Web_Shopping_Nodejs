@@ -93,6 +93,21 @@ exports.Get_Cart = (req, res, next) => {
     });
 }
 
+exports.Post_Delete_Cart_Item  = (req, res, next) => {
+    
+    const ID = req.body.productId;
+    
+    Product.FindById(ID,Item =>{
+        
+        Cart.DeleteProduct(ID,parseFloat(Item.Price));
+
+
+    });
+
+    res.redirect('/');
+};
+
+
 exports.getCheckout = (req, res, next) => {
     res.render('Shop/checkout', {
         Path: '/checkout',

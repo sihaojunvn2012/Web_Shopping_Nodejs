@@ -46,8 +46,6 @@ exports.PostEditProduct = (req,res,next) =>{
       res.redirect('/admin/products');
 }
 
-
-
 exports.GetEditProduct = (req, res, next) => {
 
     const EditMode = req.query.Edit;
@@ -78,6 +76,11 @@ exports.GetEditProduct = (req, res, next) => {
 
     }   
 }
+
+
+
+
+
 
 
 exports.PostDeleteProduct = (req, res, next) => {

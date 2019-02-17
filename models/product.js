@@ -98,7 +98,7 @@ module.exports = class Product {
             fs.writeFile(p, JSON.stringify(UpdateProducts), err => {
                 if(!err){
 
-                    Cart.DeleteProduct(id,Product.Price);
+                    Cart.DeleteProduct(id,parseFloat(Product.Price));
 
                 }
             }); 
