@@ -81,4 +81,18 @@ const p = path.join(path.dirname(process.mainModule.filename),
 
 
     }
+
+    static GetCart (cb) {
+
+      fs.readFile(p, (err, fileContent) => {
+      if (err) {
+        cb(null);
+      }
+      else {
+        cb(JSON.parse(fileContent));
+      }
+      });
+
+    } 
+
   }  
