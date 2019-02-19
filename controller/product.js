@@ -4,32 +4,51 @@ const Cart = require('../models/cart');
 
 
 exports.Get_Product_List = (req, res, next) => {
-    Product.fetchAll(product => {
+    Product.fetchAll()
+      .then(([rows,filedData]) =>{    
+
         res.render('Shop/product-list',
-            {
+        {
 
 
 
-                prods: product,
-                TitlePage: 'Products',
-                Path: '/Products',
+            prods: rows,
+            TitlePage: 'Products',
+            Path: '/Products',
 
-            });
-    });
-    // res.sendFile(path.join(rootDir,'view','shop.ejs'));    
+        });
+    })
+    .catch( err =>{
+
+        console.log(err);
+
+    })
 }
 
 exports.Get_Index = (req, res, next) => {
 
-    Product.fetchAll(product => {
-        res.render('Shop/index',
-            {
+    
 
-                prods: product,
-                TitlePage: 'Shop',
-                Path: '/'
-            });
-    });
+    Product.fetchAll()
+    .then(([rows,filedData]) =>{
+
+        
+
+        res.render('Shop/index',
+        {
+
+            prods: rows,
+            TitlePage: 'Shop',
+            Path: '/'
+        });
+
+
+    })
+    .catch( err =>{
+
+        console.log(err);
+
+    })  
 }
 
 
@@ -37,15 +56,16 @@ exports.Get_Index = (req, res, next) => {
 exports.Get_Product = (req, res, next) => {
 
     const ID = req.params.ProductID;
-
-    Product.FindById(ID, Element => {
+    Product.FindById(ID) 
+    .then(([rows,filedData])=>{         
+             
         res.render('Shop/product-detail', {
 
-            Product: Element,
-            Path: `/Products/${Element.ID}`,
+            Product: rows[0],
+            Path: `/Products/${rows[0].ID}`,
             TitlePage: 'Product Detail'
-        })
-    });
+        });  
+    })    
 }
 
 
@@ -88,8 +108,6 @@ exports.Get_Cart = (req, res, next) => {
                 Products : CartProducts
             });
         });
-
-
     });
 }
 
